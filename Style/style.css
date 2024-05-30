@@ -258,4 +258,7 @@
   .iconclass {
     flex-direction: column;
   }
+  .item-container{
+    width: 100%;
+  }
 }

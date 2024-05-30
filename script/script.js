@@ -5,7 +5,7 @@ function getProducts() {
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      console.log(data.map(c=>c.category));
+      console.log(data.map(c=>c.description));
       generateHTML(data);
     });
 }
