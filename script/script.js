@@ -1,12 +1,17 @@
 let container = document.querySelector(".product_container");
+let navitems = document.querySelectorAll(".nav-item")
+window.addEventListener("load",()=>{
+  getProducts();
 
+})
 function getProducts() {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
-      console.log(data.map(c=>c.description));
+      console.log(data.map(c=>c.category));
       generateHTML(data);
+      filterData(data);
     });
 }
 
@@ -34,4 +39,20 @@ function generateHTML(data) {
   container.innerHTML = products;
 }
 
-getProducts();
+function filterData(data) {
+  navitems.forEach((navitem)=>{
+    navitem.addEventListener("click",(e)=>{
+      let filterData;
+      let selectedItem = e.target.textContent.trim().toLowerCase();
+
+      if(selectedItem == "all"){
+        filterData = data;
+      }else{
+        filterData = data.filter(e=>e.category.trim().toLowerCase().includes(selectedItem))
+      }
+      generateHTML(filterData)    
+    })
+  })
+}
+
+
