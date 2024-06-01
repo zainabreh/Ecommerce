@@ -1,15 +1,15 @@
 let extractingData;
-onload()
-function onload (){
+
+window.addEventListener("load",()=>{
     getData();
     display();
-}
+})
 
 function getData(){
-    extractingData = cartItem.map(item=>{
-        for(let i=0; i<data.length; i++){
-            if(item == data[i].id){
-                return data[i];
+    extractingData = cartItem.map((item)=>{
+        for(let i=0; i<globalData.length; i++){
+            if(item == globalData[i].id){
+                return globalData[i];
             }
         }
     })
@@ -17,18 +17,21 @@ function getData(){
 
 
 function display(){
-    let productcart = document.querySelector(".productcart");
+    let productcart = document.getElementsByClassName("productcart");
     let providingHTML="";
 
-    if(!extractingData || extractingData == 0){
+    if(!extractingData || extractingData.length === 0){
         providingHTML = `<h1>No Items Added</h1>`
     }else{
         extractingData.forEach((ele) => {
             providingHTML += generatehtml(ele);
         });
     }
-    productcart.innerHTML = providingHTML;
+    if(productcart){
+        productcart.innerHTML = providingHTML;
+    }
 }
+
 
 
 function generatehtml(id){

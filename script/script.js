@@ -2,16 +2,22 @@ let container = document.querySelector(".product_container");
 let navitems = document.querySelectorAll(".nav-item")
 let count = document.querySelector(".count")
 let cartItem = [];
+let globalData;
 window.addEventListener("load",()=>{
   getProducts();
-
+  let bag = localStorage.getItem("cartItem")
+  cartItem = bag ? JSON.parse(bag) : [];
+  count.innerText = cartItem.length;
+  getData();
+  display();
 })
+
 function getProducts() {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
+      globalData = data;
       console.log(data);
-      console.log(data.map(c=>c.category));
       generateHTML(data);
       filterData(data);
     });
@@ -19,7 +25,8 @@ function getProducts() {
 
 function addTocart(id){
   cartItem.push(id);
-  count.innerHTML = cartItem.length;
+  localStorage.setItem('cartItem',JSON.stringify(cartItem));
+  count.innerText = cartItem.length;
   console.log(cartItem);
 }
 
