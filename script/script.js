@@ -1,5 +1,7 @@
 let container = document.querySelector(".product_container");
 let navitems = document.querySelectorAll(".nav-item")
+let count = document.querySelector(".count")
+let cartItem = [];
 window.addEventListener("load",()=>{
   getProducts();
 
@@ -13,6 +15,12 @@ function getProducts() {
       generateHTML(data);
       filterData(data);
     });
+}
+
+function addTocart(id){
+  cartItem.push(id);
+  count.innerHTML = cartItem.length;
+  console.log(cartItem);
 }
 
 function generateHTML(data) {
@@ -31,12 +39,14 @@ function generateHTML(data) {
           
           <p class="card-price"><span class="price">Price:</span>&nbsp;$&nbsp;${data.price}</p>
 
-          <button class="btn btn-primary cartbtn"><i class="fa-solid fa-cart-shopping">&nbsp;</i>Add to Cart</button>
+          <button class="btn btn-primary cartbtn" onclick="addTocart(${data.id})"><i class="fa-solid fa-cart-shopping">&nbsp;</i>Add to Cart</button>
         </div>
       </div>
         `;
   });
-  container.innerHTML = products;
+  if(container){
+    container.innerHTML = products;
+  }
 }
 
 function filterData(data) {
