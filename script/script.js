@@ -11,25 +11,25 @@ window.addEventListener("load",()=>{
   getData();
   display();
 })
-
 function getProducts() {
   fetch("https://fakestoreapi.com/products")
-    .then((res) => res.json())
-    .then((data) => {
-      globalData = data;
-      console.log(data);
-      generateHTML(data);
-      filterData(data);
-    });
+  .then((res) => res.json())
+  .then((data) => {
+    globalData = data;
+    // console.log(data);
+    generateHTML(data);
+    filterData(data);
+  });
 }
 
 function addTocart(id){
   cartItem.push(id);
   localStorage.setItem('cartItem',JSON.stringify(cartItem));
   count.innerText = cartItem.length;
-  console.log(`Items added to cart are ${cartItem}`);
 }
-// localStorage.clear();
+console.log(`Items added to cart are ${cartItem}`);
+console.log(cartItem);
+
 function generateHTML(data) {
   let products = "";
   data.forEach((data) => {

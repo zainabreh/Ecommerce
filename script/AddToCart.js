@@ -1,20 +1,18 @@
 let extractingData;
 
-window.addEventListener("load",()=>{
-    getData();
-    display();
-})
-
 function getData(){
-        extractingData = cartItem.map((item)=>{
-            for(let i=0; i<globalData.length; i++){
-                if(item == globalData[i].id){
-                    return globalData[i];
-                }
+    extractingData = cartItem.map((item)=>{
+        for(let i=0; i<globalData.length; i++){
+            if(item == globalData[i].id){
+                return globalData[i];
             }
-        })
+        }
+    })
 }
 console.log(`Get Data function is called ${getData}`);
+console.log(`cartItem is called ${cartItem}`);
+console.log(`GlobalData function is called ${globalData}`);
+console.log(`Extracting Data is called ${extractingData}`);
 
 
 function display(){
@@ -25,12 +23,12 @@ function display(){
         providingHTML = `<h1>No Items Added</h1>`
     }
      else{
-         extractingData.forEach((ele) => {
+         extractingData.map((ele) => {
                providingHTML += generatehtml(ele);
             });
-            console.log(`Display function is called ${providingHTML}`);
-    } 
+        } 
         productcart.innerHTML = providingHTML;
+        console.log(`Display function is called ${providingHTML}`);
     
 }
 
