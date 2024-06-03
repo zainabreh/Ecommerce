@@ -1,5 +1,8 @@
+window.addEventListener("load",()=>{
+    getData();
+    display();
+})
 let extractingData;
-
 function getData(){
     extractingData = cartItem.map((item)=>{
         for(let i=0; i<globalData.length; i++){
