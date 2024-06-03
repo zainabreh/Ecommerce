@@ -27,9 +27,9 @@ function addTocart(id){
   cartItem.push(id);
   localStorage.setItem('cartItem',JSON.stringify(cartItem));
   count.innerText = cartItem.length;
-  console.log(cartItem);
+  console.log(`Items added to cart are ${cartItem}`);
 }
-
+// localStorage.clear();
 function generateHTML(data) {
   let products = "";
   data.forEach((data) => {
