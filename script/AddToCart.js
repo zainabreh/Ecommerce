@@ -1,8 +1,12 @@
+// import {fetchProducts} from "./Data";
 let extractingData;
     window.addEventListener("load",()=>{
         getData();
         display();
     })
+
+    
+
 function getData(){
     extractingData = cartItem.map((item)=>{
         for(let i=0; i<globalData.length; i++){
@@ -12,11 +16,6 @@ function getData(){
                 }
     })
 }
-console.log(`Get Data function is called ${getData}`);
-console.log(`cartItem is called ${cartItem}`);
-console.log(`GlobalData function is called ${globalData}`);
-console.log(`Extracting Data is called ${extractingData}`);
-
 
 function display(){
     let productcart = document.querySelector(".productcart");

@@ -1,35 +1,45 @@
 let container = document.querySelector(".product_container");
-let navitems = document.querySelectorAll(".nav-item")
-let count = document.querySelector(".count")
+let navitems = document.querySelectorAll(".nav-item");
+let count = document.querySelector(".count");
+
+
 let cartItem = [];
-  window.addEventListener("load",()=>{
+
+
+window.addEventListener("load", () => {
     getProducts();
-    let bag = localStorage.getItem("cartItem")
+    console.log("hey",cartItem);
+    let bag = localStorage.getItem("cartItem");
     cartItem = bag ? JSON.parse(bag) : [];
     count.innerText = cartItem.length;
-    })
-let globalData;
-async function getProducts() {
-  const res = await fetch("https://fakestoreapi.com/products")
-  const data = await res.json();
-  globalData = data;
-  // console.log(data);
-  generateHTML(data);
-  filterData(data);
+    display();
+    generateHTML(data);
+    filterData(data);
+});
+  function getProducts () {
+      
+        fetch('https://fakestoreapi.com/products')
+        .then(res=>res.json())
+        .then(data=>{
+          console.log(data);
+          generateHTML(data);
+          filterData(data);
+        })
+        .catch(err=>{
+          console.log("Error Fatshing Data",err);
+        })
+}
+
+function addTocart(id) {
+  cartItem.push(id);
+  localStorage.setItem("cartItem", JSON.stringify(cartItem));
+  count.innerText = cartItem.length;
   }
-  
-  function addTocart(id){
-    cartItem.push(id);
-    localStorage.setItem('cartItem',JSON.stringify(cartItem));
-    count.innerText = cartItem.length;
-    }
-    console.log(`Items added to cart are ${cartItem}`);
-    console.log(cartItem);
-    
-    function generateHTML(data) {
-      let products = "";
-      data.forEach((data) => {
-        products += `<div class="card item-container">
+
+ function generateHTML(data) {
+  let products = "";
+  data.forEach((data) => {
+    products += `<div class="card item-container">
         <a href="/pages/productDetail.html">
         <img src=${data.image} class="prod-img"  alt="...">
         </a>
@@ -46,28 +56,31 @@ async function getProducts() {
         </div>
         </div>
         `;
-        });
-        if(container){
-          container.innerHTML = products;
-          }
-          }
-          
-          function filterData(data) {
-            navitems.forEach((navitem)=>{
-              navitem.addEventListener("click",(e)=>{
-                let filterData;
-                let selectedItem = e.target.textContent.trim().toLowerCase();
-                
-                if(selectedItem == "all"){
-                  filterData = data;
-                  }else{
-              filterData = data.filter(e=>e.category.trim().toLowerCase().includes(selectedItem))
-              }
-              generateHTML(filterData)    
-              })
-              })
-              }
-              
-              
-              
-              // localStorage.clear()
+  });
+  if (container) {
+    container.innerHTML = products;
+  }
+}
+
+function filterData(data) {
+
+    navitems.forEach((navitem) => {
+      navitem.addEventListener("click", (e) => {
+        let filterData;
+        let selectedItem = e.target.textContent.trim().toLowerCase();
+  
+        if (selectedItem == "all") {
+          filterData = data;
+        } else {
+          filterData = data.filter((e) =>
+            e.category.trim().toLowerCase().includes(selectedItem)
+          );
+        }
+        generateHTML(filterData);
+      });
+    });
+};
+
+
+
+// localStorage.clear()
