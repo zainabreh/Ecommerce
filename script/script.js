@@ -8,6 +8,7 @@ window.addEventListener("load",()=>{
   let bag = localStorage.getItem("cartItem")
   cartItem = bag ? JSON.parse(bag) : [];
   count.innerText = cartItem.length;
+  total();
 })
 // localStorage.clear()
 
@@ -102,8 +103,26 @@ function prodDetail(prodID){
                 </div>
             </div>
             `
-            productDetail.innerHTML = prodHTML;
-        }
-    }
+            }
+          productDetail.innerHTML = prodHTML;
+            }
 
 }
+
+console.log("Total function");
+function total() {
+    let total = document.getElementsByClassName("total"); 
+  
+    if (!extractingData || extractingData.length === 0) {
+      total.textContent = "$0.00"; 
+      return;
+    }
+  
+    let sum = 0.0; 
+    extractingData.forEach((ele) => {
+      sum += parseFloat(ele.price);
+    });
+  
+    total.textContent = `$${sum.toFixed(2)}`;
+    console.log(sum);
+  }
