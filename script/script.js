@@ -1,17 +1,16 @@
 let container = document.querySelector(".product_container");
-let navitems = document.querySelectorAll(".nav-item")
-let count = document.querySelector(".count")
+let navitems = document.querySelectorAll(".nav-item");
+let count = document.querySelector(".count");
 let cartItem = [];
 let globalData;
-window.addEventListener("load",()=>{
+window.addEventListener("load", () => {
   getProducts();
-  let bag = localStorage.getItem("cartItem")
+  let bag = localStorage.getItem("cartItem");
   cartItem = bag ? JSON.parse(bag) : [];
   count.innerText = cartItem.length;
   total();
-})
+});
 // localStorage.clear()
-
 
 function getProducts() {
   fetch("https://fakestoreapi.com/products")
@@ -23,10 +22,18 @@ function getProducts() {
     filterData(globalData);
   });
 }
+// async function getProducts() {
+//   const res = await fetch("https://fakestoreapi.com/products");
+//   const data = await res.json();
+//   globalData = data;
+//   console.log(globalData);
+//   generateHTML(globalData);
+//   filterData(globalData);
+// }
 
-function addTocart(id){
+function addTocart(id) {
   cartItem.push(id);
-  localStorage.setItem('cartItem',JSON.stringify(cartItem));
+  localStorage.setItem("cartItem", JSON.stringify(cartItem));
   count.innerText = cartItem.length;
 }
 
@@ -51,37 +58,39 @@ function generateHTML(data) {
       </div>
         `;
   });
-  if(container){
+  if (container) {
     container.innerHTML = products;
   }
 }
 
 function filterData(data) {
-  navitems.forEach((navitem)=>{
-    navitem.addEventListener("click",(e)=>{
+  navitems.forEach((navitem) => {
+    navitem.addEventListener("click", (e) => {
       let filterData;
       let selectedItem = e.target.textContent.trim().toLowerCase();
 
-      if(selectedItem == "all"){
+      if (selectedItem == "all") {
         filterData = data;
-      }else{
-        filterData = data.filter(e=>e.category.trim().toLowerCase().includes(selectedItem))
+      } else {
+        filterData = data.filter((e) =>
+          e.category.trim().toLowerCase().includes(selectedItem)
+        );
       }
-      generateHTML(filterData)    
-    })
-  })
+      generateHTML(filterData);
+    });
+  });
 }
 
-function prodDetail(prodID){
+function prodDetail(prodID) {
   console.log("Product detail page called");
-  localStorage.setItem('cartItem',JSON.stringify(cartItem));
+  localStorage.setItem("cartItem", JSON.stringify(cartItem));
   count.innerText = cartItem.length;
 
-  let productDetail = document.getElementsByClassName("productDetail")
-  
-    for(let i=0; i<globalData.length; i++){
-        if(prodID == globalData[i].id){
-            let prodHTML =  `
+  let productDetail = document.getElementsByClassName("productDetail");
+
+  for (let i = 0; i < globalData.length; i++) {
+    if (prodID == globalData[i].id) {
+      let prodHTML = `
                         <div class="card mb-3" style="max-width: 940px;">
                 <div class="row g-0">
                   <div class="col-md-4" >
@@ -102,27 +111,26 @@ function prodDetail(prodID){
                   </div>
                 </div>
             </div>
-            `
-            }
-          productDetail.innerHTML = prodHTML;
-            }
-
+            `;
+    }
+    productDetail.innerHTML = prodHTML;
+  }
 }
 
 console.log("Total function");
 function total() {
-    let total = document.getElementsByClassName("total"); 
-  
-    if (!extractingData || extractingData.length === 0) {
-      total.textContent = "$0.00"; 
-      return;
-    }
-  
-    let sum = 0.0; 
-    extractingData.forEach((ele) => {
-      sum += parseFloat(ele.price);
-    });
-  
-    total.textContent = `$${sum.toFixed(2)}`;
-    console.log(sum);
+  let total = document.getElementsByClassName("total");
+
+  if (!extractingData || extractingData.length === 0) {
+    total.textContent = "$0.00";
+    return;
   }
+
+  let sum = 0.0;
+  extractingData.forEach((ele) => {
+    sum += parseFloat(ele.price);
+  });
+
+  total.textContent = `$${sum.toFixed(2)}`;
+  console.log(sum);
+}
