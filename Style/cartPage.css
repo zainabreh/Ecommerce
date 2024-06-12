@@ -139,14 +139,14 @@
   }
 
 .Cartcontainer{
-    width: 100vw;
-    margin-block: 100px;
-    display: flex;
-    justify-content: space-evenly;
+  border: 2px solid red;
+    width: 1080px;
+    margin: auto;
+    padding: 50px;
 }
 
 .productcart{
-    width: 60%;
+    width: 100%;
 }
 
 .fa-xmark{
@@ -246,7 +246,7 @@
     align-items: center;
     justify-content: space-between;
     font-weight: 700;
-    margin-block: 10px;
+    margin-block: 20px;
 }
 .order-btn{
     /* width: 100%; */
